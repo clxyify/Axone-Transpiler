@@ -130,6 +130,8 @@ void Thread() {
 	L = luaL_newstate();
 	luaL_openlibs(L);
 	BypassCallCheck();
+	RegisterMouseKeyboard();
+	RegisterCustom();
 	std::cout << "Call Check Bypassed." << std::endl;
 	r_lua_getfield(RL, LUA_GLOBALSINDEX, "game");
 	r_lua_getfield(RL, -1, "GetService");
@@ -142,8 +144,7 @@ void Thread() {
 	r_lua_pushcclosure(RL, (DWORD)RenderstepHook, 0);
 	r_lua_pcall(RL, 2, 0, 0);
 	r_lua_pop(RL, 2);
-	RegisterMouseKeyboard();
-	RegisterCustom();
+	
 	std::cout << "Ready to Execute Scripts." << std::endl;
 	CreateThread(NULL, NULL, reinterpret_cast<LPTHREAD_START_ROUTINE>(exepipelmao), NULL, NULL, NULL);
 	while (true) {
